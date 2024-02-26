@@ -16,6 +16,22 @@ class NaturalPersonEntity extends PersonEntity {
         this.address = address
     }
 
+    String getCpf() {
+        return cpf
+    }
+
+    void setCpf(String cpf) {
+        this.cpf = cpf
+    }
+
+    Integer getAge() {
+        return age
+    }
+
+    void setAge(Integer age) {
+        this.age = age
+    }
+
     @Override
     String toString() {
         return """${super.toString()}

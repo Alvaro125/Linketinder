@@ -8,9 +8,9 @@ class NaturalPersonEntity extends PersonEntity {
     Integer age
 
     NaturalPersonEntity(
-            String nome, String email, String description, AddressEntity address,
+            String name, String email, String description, AddressEntity address,
             String cpf, Integer age, List<String> skills=[]) {
-        super(nome, email, description, address, skills)
+        super(name, email, description, address, skills)
         this.cpf = cpf
         this.age = age
         this.address = address

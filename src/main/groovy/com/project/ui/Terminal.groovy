@@ -3,62 +3,16 @@ package com.project.ui
 import com.project.entity.AddressEntity
 import com.project.entity.NaturalPersonEntity
 import com.project.entity.LegalPersonEntity
+import com.project.services.LegalPersonService
+import com.project.services.NaturalPersonService
 
 class Terminal {
-    List<NaturalPersonEntity> candidatos = [
-            new NaturalPersonEntity(
-                    "João Silva", "joaosilva@email.com", "Desenvolvedor Python",
-                    new AddressEntity("Brasil", "São Paulo", "111111-111"),
-                    "12345678900", 25, ["Python", "BackEnd"]
-            ),
-            new NaturalPersonEntity(
-                    "Pedro Souza", "pedrosouza@email.com", "Analista de Dados",
-                    new AddressEntity("Brasil", "Minas Gerais", "333333-333"),
-                    "32145678901", 28
-            ),
-            new NaturalPersonEntity(
-                    "Maria Oliveira", "mariaoliveira@email.com", "Engenheira de Software",
-                    new AddressEntity("Brasil", "Rio de Janeiro", "222222-222"),
-                    "09876543210", 30
-            ),
-            new NaturalPersonEntity(
-                    "Ana Costa", "anacosta@email.com", "Gerente de Projetos",
-                    new AddressEntity("Portugal", "Lisboa", "444444-444"),
-                    "45678901234", 40
-            ),
-            new NaturalPersonEntity(
-                    "Carlos Santos", "carloshs@email.com", "Designer UX/UI",
-                    new AddressEntity("Argentina", "Buenos Aires", "555555-555"),
-                    "56789012345", 23
-            )
-    ].toList()
-    List<LegalPersonEntity> empresas = [
-            new LegalPersonEntity(
-                    "Empresa X", "empresax@email.com", "Empresa de software",
-                    new AddressEntity("Brasil", "São Paulo", "111111-111"),
-                    "12345678901234"
-            ),
-            new LegalPersonEntity(
-                    "Empresa Y", "empresay@email.com", "Empresa de marketing digital",
-                    new AddressEntity("Brasil", "Rio de Janeiro", "222222-222"),
-                    "09876543210987"
-            ),
-            new LegalPersonEntity(
-                    "Empresa Z", "empresaz@email.com", "Empresa de contabilidade",
-                    new AddressEntity("Brasil", "Minas Gerais", "333333-333"),
-                    "32145678901234"
-            ),
-            new LegalPersonEntity(
-                    "Empresa W", "empresaw@email.com", "Empresa de logística",
-                    new AddressEntity("Portugal", "Lisboa", "444444-444"),
-                    "45678901234567"
-            ),
-            new LegalPersonEntity(
-                    "Empresa V", "empresav@email.com", "Empresa de turismo",
-                    new AddressEntity("Argentina", "Buenos Aires", "555555-555"),
-                    "56789012345678"
-            )
-    ].toList()
+    static NaturalPersonService naturalPersonService
+    static LegalPersonService legalPersonService
+
+    Terminal(){
+        legalPersonService = new LegalPersonService()
+    }
 
     void run() {
         def option = ""
@@ -86,10 +40,14 @@ class Terminal {
                 """
                     return
                 case "1":
-                    println candidatos.join("\n----------------------------------------\n")
+                    println naturalPersonService
+                            .listAll()
+                            .join("\n----------------------------------------\n")
                     break
                 case "2":
-                    println empresas.join("\n----------------------------------------\n")
+                    println legalPersonService
+                            .listAll()
+                            .join("\n----------------------------------------\n")
                     break
                 case "3":
                     addNaturalPerson(br)
@@ -168,13 +126,13 @@ class Terminal {
             cpf = br.readLine()
         }
 
-        NaturalPersonEntity novo_candidato = new NaturalPersonEntity(
+        NaturalPersonEntity new_candidate = new NaturalPersonEntity(
                 name, email, description, new AddressEntity(country,state,cep),
                 cpf,age,skills
         )
 
-        println "\n\n"+novo_candidato
-        this.candidatos.add(novo_candidato)
+        println "\n\n"+new_candidate
+        naturalPersonService.addUser(new_candidate)
     }
 
     private void addLegalPerson(BufferedReader br) {
@@ -232,12 +190,12 @@ class Terminal {
             cnpj = br.readLine()
         }
 
-        LegalPersonEntity nova_empresa = new LegalPersonEntity(
+        LegalPersonEntity new_company = new LegalPersonEntity(
                 name, email, description, new AddressEntity(country,state,cep),
                 cnpj,skills
         )
 
-        println "\n\n"+nova_empresa
-        this.empresas.add(nova_empresa)
+        println "\n\n"+new_company
+        legalPersonService.addUser(new_company)
     }
 }

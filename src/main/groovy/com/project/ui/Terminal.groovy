@@ -12,6 +12,7 @@ class Terminal {
 
     Terminal(){
         legalPersonService = new LegalPersonService()
+        naturalPersonService = new NaturalPersonService()
     }
 
     void run() {
@@ -40,9 +41,9 @@ class Terminal {
                 """
                     return
                 case "1":
-                    println naturalPersonService
+                    println(naturalPersonService
                             .listAll()
-                            .join("\n----------------------------------------\n")
+                            .join("\n----------------------------------------\n"))
                     break
                 case "2":
                     println legalPersonService
